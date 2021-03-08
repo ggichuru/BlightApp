@@ -1,6 +1,6 @@
 import 'package:blightclient/Pages/Auth/AuthenticationService.dart';
 import 'package:blightclient/Pages/Dashboard/homePage.dart';
-import 'package:blightclient/Pages/OnBoarding/OnBoarding.dart';
+import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
 import 'package:blightclient/Pages/Start/StartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               primaryColor: Color(0xFFF5A627),
               scaffoldBackgroundColor: Colors.white),
-          home: OnBoarding()),
+          home: AuthenticationWrapper()),
     );
   }
 }
@@ -45,6 +45,7 @@ class AuthenticationWrapper extends StatelessWidget {
     if (firebaseUser != null) {
       return HomePage();
     }
-    return StartScreen();
+    return LoginSignupScreen();
+    // return StartScreen();
   }
 }
