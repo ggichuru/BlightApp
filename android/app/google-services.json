@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1046454602553",
+    "project_id": "blightclient",
+    "storage_bucket": "blightclient.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046454602553:android:d9320db7c630eefaecb6e8",
+        "android_client_info": {
+          "package_name": "com.example.blightclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046454602553-6ilq755j3sbb0ln9koj6a1ptmf39959n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blightclient",
+            "certificate_hash": "c2664731df3f6d7b1779d8831df7b7448a3a4a13"
+          }
+        },
+        {
+          "client_id": "1046454602553-p46jsa13gjdsuk21iuse3orc49v7gvtj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIh_qx4ECaEx8dK6AsuYHiWOl27R5Oi9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046454602553-p46jsa13gjdsuk21iuse3orc49v7gvtj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
