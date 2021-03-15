@@ -1,8 +1,13 @@
+import 'package:blightclient/Config/locator.dart';
 import 'package:blightclient/Config/pallet.dart';
-import 'package:blightclient/Pages/Dashboard/homePage.dart';
+import 'package:blightclient/Pages/Auth/googleSignin.dart';
+import 'package:blightclient/Pages/Dashboard/dashboard.dart';
+import 'package:blightclient/models/user.dart';
+import 'package:blightclient/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+
 
 class LoginSignupScreen extends StatefulWidget {
   @override
@@ -15,7 +20,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   bool isRememberMe = false;
   bool isLoading = false;
 
-  final DatabaseReference dbRef = FirebaseDatabase.instance.reference().child("Users");
+  final FirestoreService _firestoreService = locator<FirestoreService>();
+
+  final DatabaseReference dbRef =
+      FirebaseDatabase.instance.reference().child("users");
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -31,6 +39,27 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
           mainContainer(context),
           // Button login sign up
           buildBottomHalfContainer(),
+
+          Positioned(
+            top: MediaQuery.of(context).size.height - 100,
+            right: 0,
+            left: 0,
+            child: Column(
+              children: [
+                Text(isSignupScreen ? "Or Signup with" : "Or Signin with"),
+                Container(
+                  margin: EdgeInsets.only(right: 20, left: 20, top: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      buildTextButton(
+                          Icons.plus_one, "Google", Palette.googleColor),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -176,8 +205,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       margin: EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          buildTextField(Icons.person_outline, 'UserName', false, false, nameController),
-
+          buildTextField(
+              Icons.person_outline, 'UserName', false, false, nameController),
           buildTextField(
               Icons.email_outlined, 'Email', false, true, emailController),
           buildTextField(
@@ -294,11 +323,13 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         .then((result) {
       isLoading = false;
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => Dashboard()));
     }).catchError((err) {
       print(err.message);
-      showDialog(context: context, builder: (BuildContext context) {
-        return AlertDialog(
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
               title: Text("Error"),
               content: Text(err.message),
               actions: [
@@ -314,20 +345,20 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     });
   }
 
-  
   void clickSignup() {
-     FirebaseAuth.instance
+    FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
         .then((result) {
-      dbRef.child(result.user.uid).set({
-        "email": emailController.text,
-        "name": nameController.text
-      }).then((res) {
+      _firestoreService.createUser(Users(
+        id: result.user.uid,
+        email: emailController.text,
+        name: nameController.text
+      )).then((res) {
         isLoading = false;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage(uid: result.user.uid)),
+          MaterialPageRoute(builder: (context) => Dashboard()),
         );
       });
     }).catchError((err) {
@@ -377,7 +408,36 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     );
   }
 
-   @override
+  TextButton buildTextButton(
+      IconData icon, String title, Color backgroundColor) {
+    return TextButton(
+      onPressed: () {
+        signInWithGoogle();
+      },
+      style: TextButton.styleFrom(
+          side: BorderSide(width: 1, color: Colors.grey),
+          minimumSize: Size(145, 40),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          primary: Colors.white,
+          backgroundColor: backgroundColor),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            title,
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
   void dispose() {
     super.dispose();
     nameController.dispose();
