@@ -1,15 +1,22 @@
 import 'package:blightclient/Pages/Auth/AuthenticationService.dart';
 import 'package:blightclient/Pages/Dashboard/dashboard.dart';
+import 'package:blightclient/Pages/OnBoarding/OnBoarding.dart';
 import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Config/locator.dart';
 
+int initScreen;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = preferences.getInt("initScreen");
+  await preferences.setInt('initScreen', 1);
   await Firebase.initializeApp();
   setupLocator();
   runApp(MyApp());
@@ -25,7 +32,8 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              context.read<AuthenticationService>().authStateChanges, initialData: null,
+              context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
         )
       ],
       child: MaterialApp(
@@ -34,7 +42,13 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               primaryColor: Color(0xFFF5A627),
               scaffoldBackgroundColor: Colors.white),
-          home: AuthenticationWrapper()),
+          //home: AuthenticationWrapper(),
+          initialRoute: initScreen == 0 || initScreen == null ? 'onBoard' : 'home',
+          routes: {
+            'home' : (context) => AuthenticationWrapper(),
+            'onBoard' : (context) => OnBoarding()
+          },
+          ),
     );
   }
 }

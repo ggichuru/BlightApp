@@ -1,4 +1,5 @@
 import 'package:blightclient/Pages/OnBoarding/OnBoardContent.dart';
+import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
 import 'package:blightclient/Pages/Start/StartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -90,7 +91,7 @@ int currentIndex = 0;
               if (currentIndex == contents.length - 1) {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => StartScreen()),
+                  MaterialPageRoute(builder: (_) => LoginSignupScreen()),
                 );
               }
               _controller.nextPage(
