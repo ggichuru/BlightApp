@@ -17,7 +17,6 @@ class _FarmState extends State<Farm> {
         backgroundColor: Colors.green[800],
       ),
       body: Container(
-        
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -36,24 +35,12 @@ class _FarmState extends State<Farm> {
                 ),
               ),
               Column(
-                  children: [
-                    containerItems(
-                      'KIGOI FARM',
-                      'Kinangop, Kenya',
-                      '2400 ha'
-                    ),
-                    containerItems(
-                      'Kanunu Farm',
-                      'Chaka, Kenya',
-                      '1800 ha'
-                    ),
-                    containerItems(
-                      'Gicheru Farm',
-                      'Narumoro, Kenya',
-                      '1800 ha'
-                    ),
-                  ],
-                ),
+                children: [
+                  containerItems('KIGOI FARM', 'Kinangop, Kenya', '2400 ha'),
+                  containerItems('Kanunu Farm', 'Chaka, Kenya', '1800 ha'),
+                  containerItems('Gicheru Farm', 'Narumoro, Kenya', '1800 ha'),
+                ],
+              ),
             ],
           ),
         ),
@@ -62,10 +49,13 @@ class _FarmState extends State<Farm> {
   }
 
   GestureDetector containerItems(
-      String farmName, String farmLocation, String farmSize,) {
+    String farmName,
+    String farmLocation,
+    String farmSize,
+  ) {
     return GestureDetector(
       onTap: () {
-        FarmDetails();
+         Navigator.push(this.context, MaterialPageRoute(builder: (context)=>FarmDetails()));
       },
       child: Container(
         height: 240,
@@ -84,8 +74,7 @@ class _FarmState extends State<Farm> {
                     margin: EdgeInsets.only(top: 50),
                   ),
                   Align(
-                    child: Hero(
-                        tag: 1, child: Image.asset('assets/images/pt.png')),
+                    child: Image.asset('assets/images/pt.png'),
                   )
                 ],
               ),
@@ -100,11 +89,12 @@ class _FarmState extends State<Farm> {
                         topRight: Radius.circular(20),
                         bottomRight: Radius.circular(20))),
                 child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(farmName, style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(farmName,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                     //SizedBox(height: 10),
                     //Text('Location', style: TextStyle(fontSize: 14)),
                     Row(
@@ -122,11 +112,12 @@ class _FarmState extends State<Farm> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Farm Size: ', style: TextStyle(
+                        Text('Farm Size: ',
+                            style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w300)),
                         Text(farmSize),
                       ],
-                      )
+                    )
                   ],
                 ),
               ),

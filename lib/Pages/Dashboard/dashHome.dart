@@ -1,9 +1,8 @@
-import 'package:blightclient/Pages/Dashboard/homePage.dart';
 import 'package:blightclient/Pages/Dashboard/homeScreen.dart';
 import 'package:blightclient/Pages/Dashboard/screens/farm.dart';
 import 'package:blightclient/Pages/Dashboard/screens/home.dart';
+import 'package:blightclient/Pages/Dashboard/screens/profile.dart';
 import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
-import 'package:blightclient/Pages/Start/StartScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,10 @@ class DashHome extends StatefulWidget {
 
 class _DashHomeState extends State<DashHome> {
   int _selectedTabIndex = 0;
-  List<Widget> tabs = [Home(), Farm(), StartScreen(), HomeScreen()];
+  List<Widget> tabs = [
+    // Home(),
+    Farm(),
+    Profile()];
 
   _changeIndex(int index) {
     setState(() {
@@ -36,22 +38,22 @@ class _DashHomeState extends State<DashHome> {
         iconTheme: IconThemeData(color: Colors.black),
         actions: [
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.exit_to_app,
-                color: Colors.black,
-              ),
-              onPressed: () {
+              padding: EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.black,
+                ),
+                onPressed: () {
                   FirebaseAuth.instance.signOut().then((res) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginSignupScreen()),
-                      (Route<dynamic> route) => false);
-                });
-              },
-            )
-          ),
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginSignupScreen()),
+                        (Route<dynamic> route) => false);
+                  });
+                },
+              )),
         ],
       ),
       drawer: topDrawer(),
@@ -66,10 +68,41 @@ class _DashHomeState extends State<DashHome> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Icon(
-              Icons.account_box,
-              size: 50,
-              color: Colors.white,
+            child: Column(
+              children: [
+                // Icon(
+                //   Icons.account_circle_outlined,
+                //   size: 50,
+                //   color: Colors.white,
+                // ),
+                Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
+                              ))),
+                    ),
+                Text(
+                  'Test User',
+                  style: TextStyle(color: Colors.yellow , fontWeight: FontWeight.bold),
+                ),
+                Text('Kinangop, Kenya',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ],
             ),
             decoration: BoxDecoration(
               color: Color(0xFF51822b),
@@ -114,9 +147,9 @@ class _DashHomeState extends State<DashHome> {
       currentIndex: _selectedTabIndex,
       onTap: _changeIndex,
       items: <BottomNavigationBarItem>[
-         BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.dashboard_sharp), label: 'Farm'),
+        //BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard_sharp), label: 'Farms'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
     );
