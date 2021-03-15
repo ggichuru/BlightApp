@@ -32,8 +32,8 @@ dependencies:
   flutter_icons: ^1.1.0
   splashscreen : ^1.2.0
 
-  crypto_font_icons: ^0.1.0+1 
-  typicons_flutter: ^0.2.1
+  crypto_font_icons: ^1.0.0+1 
+  typicons_flutter: ^0.4.2
 
   flutter_signin_button: ^1.0.0
 
@@ -41,8 +41,12 @@ dependencies:
   firebase_core: ^1.0.0
   firebase_auth: ^1.0.0
   firebase_database: ^6.1.0
+  cloud_firestore: ^1.0.1
+  google_sign_in: ^5.0.0
 
-  provider: ^4.3.2+1
+  provider: ^5.0.0
+
+  get_it: ^6.0.0
 
 
 dev_dependencies:
@@ -67,6 +71,10 @@ flutter:
     - assets/images/garden1.svg
     - assets/images/growth1.svg
     - assets/images/start.jpg
+    - assets/images/cat.png
+    - assets/images/pet-cat1.png
+    - assets/images/pet-cat2.png
+    - assets/images/pt.png
     # - assets/icons
   #   - images/a_dot_ham.jpeg
 

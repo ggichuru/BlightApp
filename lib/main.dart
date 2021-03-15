@@ -1,15 +1,17 @@
 import 'package:blightclient/Pages/Auth/AuthenticationService.dart';
-import 'package:blightclient/Pages/Dashboard/homePage.dart';
+import 'package:blightclient/Pages/Dashboard/dashboard.dart';
 import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
-import 'package:blightclient/Pages/Start/StartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
+import 'Config/locator.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  setupLocator();
   runApp(MyApp());
 }
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              context.read<AuthenticationService>().authStateChanges,
+              context.read<AuthenticationService>().authStateChanges, initialData: null,
         )
       ],
       child: MaterialApp(
@@ -43,7 +45,7 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User>();
 
     if (firebaseUser != null) {
-      return HomePage();
+      return Dashboard();
     }
     return LoginSignupScreen();
     //return StartScreen();
