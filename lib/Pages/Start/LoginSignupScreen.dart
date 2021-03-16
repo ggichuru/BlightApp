@@ -4,6 +4,7 @@ import 'package:blightclient/Pages/Auth/googleSignin.dart';
 import 'package:blightclient/Pages/Dashboard/dashboard.dart';
 import 'package:blightclient/models/user.dart';
 import 'package:blightclient/services/firestore_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -350,11 +351,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         .createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
         .then((result) {
-      _firestoreService.createUser(Users(
-        id: result.user.uid,
-        email: emailController.text,
-        name: nameController.text
-      )).then((res) {
+          FirebaseFirestore.instance.collection('users').add({
+            'uID': result.user.uid,
+            'email': emailController.text,
+            'fullName': nameController.text
+          })
+          .then((res) {
         isLoading = false;
         Navigator.pushReplacement(
           context,
