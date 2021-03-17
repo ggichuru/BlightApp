@@ -1,9 +1,12 @@
 import 'package:blightclient/Pages/Dashboard/homeScreen.dart';
 import 'package:blightclient/Pages/Dashboard/screens/farm.dart';
 import 'package:blightclient/Pages/Dashboard/screens/home.dart';
+import 'package:blightclient/Pages/Dashboard/screens/farmScreen.dart';
 import 'package:blightclient/Pages/Dashboard/screens/profile.dart';
 import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class DashHome extends StatefulWidget {
@@ -14,9 +17,10 @@ class DashHome extends StatefulWidget {
 class _DashHomeState extends State<DashHome> {
   int _selectedTabIndex = 0;
   List<Widget> tabs = [
-    // Home(),
-    Farm(),
-    Profile()];
+    //Home(),
+    FarmsScreen(),
+    Profile(),
+    ];
 
   _changeIndex(int index) {
     setState(() {
@@ -28,21 +32,21 @@ class _DashHomeState extends State<DashHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF51822b).withOpacity(.85),
         title: Center(
           child: Text(
             'BlightClient',
-            style: TextStyle(color: Color(0xFF00713E)),
+            style: TextStyle(color: Colors.white),
           ),
         ),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.white),
         actions: [
           Padding(
               padding: EdgeInsets.all(8.0),
               child: IconButton(
                 icon: Icon(
-                  Icons.exit_to_app,
-                  color: Colors.black,
+                  Icons.logout,
+                  color: Colors.white,
                 ),
                 onPressed: () {
                   FirebaseAuth.instance.signOut().then((res) {
@@ -70,68 +74,49 @@ class _DashHomeState extends State<DashHome> {
           DrawerHeader(
             child: Column(
               children: [
-                // Icon(
-                //   Icons.account_circle_outlined,
-                //   size: 50,
-                //   color: Colors.white,
-                // ),
-                Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
-                              ))),
-                    ),
-                Text(
-                  'Test User',
-                  style: TextStyle(color: Colors.yellow , fontWeight: FontWeight.bold),
+                Icon(
+                  Icons.account_circle_rounded,
+                  size: 100,
+                  color: Colors.black,
                 ),
-                Text('Kinangop, Kenya',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              
+                    SizedBox(height: 6,),
+                Text(
+                  FirebaseAuth.instance.currentUser.email,
+                  style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+                // Text( FirebaseAuth.instance.currentUser.phoneNumber,
+                //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ],
             ),
             decoration: BoxDecoration(
-              color: Color(0xFF51822b),
+              color: Color(0xFF51822b).withOpacity(.85),
             ),
           ),
           ListTile(
-            title: Text('Item 1'),
+            title: Text('Edit Profile'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
-          ListTile(
-            title: Text('Item 2'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text('Item 3'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text('Item 4'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+          // ListTile(
+          //   title: Text('Item 2'),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          // ListTile(
+          //   title: Text('Item 3'),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          // ListTile(
+          //   title: Text('Item 4'),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
         ],
       ),
     );
@@ -140,17 +125,19 @@ class _DashHomeState extends State<DashHome> {
   Widget bottomNav() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      unselectedItemColor: Colors.black87,
-      selectedItemColor: Color(0xFF00713E),
+      unselectedItemColor: Colors.white,
+      selectedItemColor: Colors.yellow[700],
+      backgroundColor: Color(0xFF51822b).withOpacity(.85),
       selectedFontSize: 12,
       unselectedFontSize: 10,
       currentIndex: _selectedTabIndex,
       onTap: _changeIndex,
       items: <BottomNavigationBarItem>[
-        //BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+       // BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
         BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_sharp), label: 'Farms'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+     //   BottomNavigationBarItem(icon: Icon(Icons.post_add), label: 'Posts'),
       ],
     );
   }

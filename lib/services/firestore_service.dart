@@ -7,9 +7,18 @@ class FirestoreService {
 
   Future createUser(Users user) async {
     try {
-      await _users.doc(user.id).set(user.toJson());
+      await _users.doc(user.uid).set(user.toJson());
     } catch (e) {
       return e.message;
     }
   }
+
+  // Future getUser(String uid) async {
+  //   try {
+  //     var userData = await FirebaseFirestore.instance.collection('users').get();
+  //     return Users.fromData(userData.);
+  //   } catch (e) {
+  //     return e.message;
+  //   }
+  // }
 }
