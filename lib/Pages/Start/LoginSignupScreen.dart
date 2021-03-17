@@ -352,7 +352,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             email: emailController.text, password: passwordController.text)
         .then((result) {
           FirebaseFirestore.instance.collection('users').add({
-            'uID': result.user.uid,
+            'uid': result.user.uid,
             'email': emailController.text,
             'fullName': nameController.text
           })

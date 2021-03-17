@@ -14,7 +14,7 @@ class _FarmState extends State<Farm> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: null,
-        backgroundColor: Colors.green[800],
+        backgroundColor: Color(0xFF51822b).withOpacity(.85),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -26,11 +26,11 @@ class _FarmState extends State<Farm> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Farms',
+                    Text('FARMS',
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.green[800])),
+                            color: Color(0xFF51822b).withOpacity(.85))),
                   ],
                 ),
               ),
