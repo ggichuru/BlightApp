@@ -118,7 +118,6 @@ class _FarmsScreenState extends State<FarmsScreen> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedItem = value;
-                                
                               });
                             },
                           ),
@@ -183,6 +182,8 @@ class _FarmsScreenState extends State<FarmsScreen> {
 
                         FirebaseFirestore.instance
                             .collection("farms")
+                            .doc(FirebaseAuth.instance.currentUser.uid)
+                            .collection('farms')
                             .add(newFarm)
                             .whenComplete(() {
                           Navigator.of(context).pop();
@@ -225,7 +226,11 @@ class _FarmsListState extends State<FarmsList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('farms').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('farms')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .collection('farms')
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
@@ -396,6 +401,9 @@ class _FarmsListState extends State<FarmsList> {
                                         onPressed: () {
                                           FirebaseFirestore.instance
                                               .collection('farms')
+                                              .doc(FirebaseAuth
+                                                  .instance.currentUser.uid)
+                                              .collection('farms')
                                               .doc(document.id)
                                               .delete()
                                               .whenComplete(() =>
@@ -502,6 +510,11 @@ class _FarmsListState extends State<FarmsList> {
                                                     // Updae Firestore record information regular way
                                                     FirebaseFirestore.instance
                                                         .collection("farms")
+                                                        .doc(FirebaseAuth
+                                                            .instance
+                                                            .currentUser
+                                                            .uid)
+                                                        .collection('farms')
                                                         .doc(document.id)
                                                         .update(updateFarm)
                                                         .whenComplete(() {

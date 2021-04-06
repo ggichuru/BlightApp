@@ -1,12 +1,7 @@
-import 'package:blightclient/Pages/Dashboard/homeScreen.dart';
-import 'package:blightclient/Pages/Dashboard/screens/farm.dart';
-import 'package:blightclient/Pages/Dashboard/screens/home.dart';
 import 'package:blightclient/Pages/Dashboard/screens/farmScreen.dart';
 import 'package:blightclient/Pages/Dashboard/screens/profile.dart';
 import 'package:blightclient/Pages/Start/LoginSignupScreen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class DashHome extends StatefulWidget {

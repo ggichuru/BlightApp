@@ -2,7 +2,6 @@ import 'package:blightclient/Config/locator.dart';
 import 'package:blightclient/Config/pallet.dart';
 import 'package:blightclient/Pages/Auth/googleSignin.dart';
 import 'package:blightclient/Pages/Dashboard/dashboard.dart';
-import 'package:blightclient/models/user.dart';
 import 'package:blightclient/services/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
